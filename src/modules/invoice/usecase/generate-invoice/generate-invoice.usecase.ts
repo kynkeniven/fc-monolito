@@ -1,9 +1,6 @@
-import Id from "../../../@shared/domain/value-object/id.value-object";
-import InvoiceItems from "../../domain/invoice-items.entity";
-import Invoice from "../../domain/invoice.entity";
+
 import InvoiceFactory from "../../factory/invoice.factory";
 import InvoiceGateway from "../../gateway/invoice.gateway";
-import Address from "../../value-object/address";
 import { GenerateInvoiceUseCaseInputDto, GenerateInvoiceUseCaseOutputDto } from "./generate-invoice.dto";
 
 
@@ -19,7 +16,7 @@ export default class GenerateInvoiceUseCase {
 
     const invoice = InvoiceFactory.create(input);
 
-    this._invoiceRepository.generate(invoice);
+    await this._invoiceRepository.generate(invoice);
 
  
     const itemsList = invoice.items.map((item) => {

@@ -2,6 +2,10 @@ import { Sequelize } from "sequelize-typescript";
 import InvoiceFacadeFactory from "../factory/facade.factory";
 import { InvoiceModel } from "../repository/invoice.model";
 import { InvoiceItemsModel } from "../repository/invoice-items.model";
+import Invoice from "../domain/invoice.entity";
+import Id from "../../@shared/domain/value-object/id.value-object";
+import Address from "../value-object/address";
+import InvoiceItems from "../domain/invoice-items.entity";
 
 
 
@@ -18,12 +22,10 @@ describe("InvoiceFacade test", () => {
 
     await sequelize.addModels([InvoiceModel,InvoiceItemsModel]);
     await sequelize.sync();
-    console.log("beforeEach");
   });
 
   afterEach(async () => {
     await sequelize.close();
-    console.log("afterEach");
   });
 
   it("should generate an invoice", async () => {
@@ -53,7 +55,6 @@ describe("InvoiceFacade test", () => {
   };
 
     const result = await invoiceFacade.generate(input);
-    console.log("after generate");
     expect(result).toBeDefined();
     expect(result.id).toBeDefined;
     expect(input.name).toEqual(result.name);
@@ -74,7 +75,7 @@ describe("InvoiceFacade test", () => {
     expect(result.total).toEqual(600);
   });
 
-/*it("should find invoice", async () => {
+it("should find invoice", async () => {
     const invoiceItemProps = {
       name: "Name 1",
       price: 100,
@@ -130,5 +131,5 @@ describe("InvoiceFacade test", () => {
     expect(invoice.items.length).toBe(1);
     expect(invoice.items[0].name).toEqual(result.items[0].name);
     expect(invoice.items[0].price).toEqual(result.items[0].price);
-  });*/
+  });
 });
